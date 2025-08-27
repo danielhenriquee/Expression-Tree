@@ -62,7 +62,7 @@ TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
             i++;
 
         } else if (expression[i] == ')') { // If the character is ')', process the operators stack until '('
-            while (!isEmpty(operators) && top(operators)->data != "(")
+            while (!LinkedS_isEmpty(operators) && top(operators)->data != "(")
                 opSubtree(LinkedS_pop(operators)->data[0], operands);
 
             pop(operators); // Pop the '('
@@ -83,7 +83,7 @@ TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
     // The node consists of the operator and its childs are the operands
     // Eventually, an operator node will get as childs the others operators with their childs operands 
     while (!LinkedS_isEmpty(operators)) // While operators stack not empty
-         opSubtree(pop(operators)->data[0], operands);
+         opSubtree(LinkedS_pop(operators)->data[0], operands);
 
     tree.root = LinkedS_pop(operands); // Set root of expression tree
     return *tree.root;
@@ -92,7 +92,7 @@ TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
 // Solve expression tree
 template <typename T>
 float solveExpressionTree(TreeNode<T> *root) {
-    if (root->left == NULL && root->right == NULL) // Check if it is a leaf, ff the current node is a leaf, it must be a number
+    if (root->left == nullptr && root->right == nullptr) // Check if it is a leaf, ff the current node is a leaf, it must be a number
         return stof(root->data); // Convert string to float and return
 
     float leftSide = solveExpressionTree(root->left); // Solve left side
@@ -131,7 +131,7 @@ void processExpression(string &expression) {
 // Get tree's height
 template <typename T>
 int getHeight(TreeNode<T> *root) {
-    if (root == NULL)
+    if (root == nullptr)
         return 0;
 
     // Recursively get the height of the left and right subtrees, and add 1 for the current node
@@ -150,7 +150,7 @@ int getColumn(int height) {
 // Auxiliar function to print tree // Fill all the matrix positions with their respectively data
 template <typename T>
 void AuxPrintTree(string **M, TreeNode<T> *root, int column, int level, int height) {
-    if (root == NULL)
+    if (root == nullptr)
         return;
 
     // Set the current node's data in the respectively matrix position
