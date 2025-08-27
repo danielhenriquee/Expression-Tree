@@ -22,8 +22,8 @@ int opPriority(char op) {
 // Connects an operator with two operands in a subtree and then push it back to stack
 template <typename T>
 void opSubtree(char op, Stack<TreeNode<T>*> &operands) { 
-    TreeNode<T> *right = pop(operands); // Pop the right operand off the stack
-    TreeNode<T> *left = pop(operands); // Pop the left operand off the stack
+    TreeNode<T> *right = LinkedS_pop(operands); // Pop the right operand off the stack
+    TreeNode<T> *left = LinkedS_pop(operands); // Pop the left operand off the stack
     TreeNode<T> *node = new TreeNode<T>; // Create a new node for the operator
     node->data = op;
     node->left = left; // Set the left child (left operand)
@@ -31,15 +31,15 @@ void opSubtree(char op, Stack<TreeNode<T>*> &operands) {
 
     // The node consists of the operator and its childs are the operands
     // Eventually, an operator node will get as childs the others operators with their childs operands 
-    push(operands, node); // Push the new subtree back to the operands stack
+    LinkedS_push(operands, node); // Push the new subtree back to the operands stack
 }
 
 // Build expression tree
 template <typename T>
 TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
     Stack<TreeNode<T>*> operands, operators; // Stack of generic binary trees
-    bootStack(operands); // Stack for operands
-    bootStack(operators); // Stack for operators
+    LinkedS_boot(operands); // Stack for operands
+    LinkedS_boot(operators); // Stack for operators
 
     int i = 0; // Index to traverse the expression
     while (i < expression.length()) { 
@@ -53,39 +53,39 @@ TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
 
             TreeNode<T> *newNode = new TreeNode<T>; 
             newNode->data = num; // Set number
-            push(operands, newNode); // Push number to the operands stack
+            LinkedS_push(operands, newNode); // Push number to the operands stack
 
         } else if (expression[i] == '(') { // If the character is '('
             TreeNode<T> *newNode = new TreeNode<T>; 
             newNode->data = "("; // Set "("
-            push(operators, newNode); // Push '(' to the operators stack
+            LinkedS_push(operators, newNode); // Push '(' to the operators stack
             i++;
 
         } else if (expression[i] == ')') { // If the character is ')', process the operators stack until '('
             while (!isEmpty(operators) && top(operators)->data != "(")
-                opSubtree(pop(operators)->data[0], operands);
+                opSubtree(LinkedS_pop(operators)->data[0], operands);
 
             pop(operators); // Pop the '('
             i++;
 
         } else { // The character is an operator
             char op = expression[i];
-            while (!isEmpty(operators) && opPriority(top(operators)->data[0]) >= opPriority(op)) // While there are operators on the stack with higher or equal priority
-                opSubtree(pop(operators)->data[0], operands); // Create operation sub-tree
+            while (!LinkedS_isEmpty(operators) && opPriority(top(operators)->data[0]) >= opPriority(op)) // While there are operators on the stack with higher or equal priority
+                opSubtree(LinkedS_pop(operators)->data[0], operands); // Create operation sub-tree
 
             TreeNode<T> *newNode = new TreeNode<T>; 
             newNode->data = op; // Set operator
-            push(operators, newNode); // Push operator to the operators stack
+            LinkedS_push(operators, newNode); // Push operator to the operators stack
             i++; 
         }
     }
 
     // The node consists of the operator and its childs are the operands
     // Eventually, an operator node will get as childs the others operators with their childs operands 
-    while (!isEmpty(operators)) // While operators stack not empty
+    while (!LinkedS_isEmpty(operators)) // While operators stack not empty
          opSubtree(pop(operators)->data[0], operands);
 
-    tree.root = pop(operands); // Set root of expression tree
+    tree.root = LinkedS_pop(operands); // Set root of expression tree
     return *tree.root;
 }
 
