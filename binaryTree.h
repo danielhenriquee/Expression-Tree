@@ -1,7 +1,5 @@
-#ifndef binaryTree_H_INCLUDED
-#define binaryTree_H_INCLUDED
-
-#include <iostream>
+#ifndef BINARY_TREE_H_INCLUDED
+#define BINARY_TREE_H_INCLUDED
 
 // Generic tree node
 template <typename T>
@@ -20,7 +18,7 @@ struct Tree {
 // Boot generic binary tree
 template <typename T>
 void bootTree(Tree<T> &tree) {
-    tree.root = NULL;
+    tree.root = nullptr;
 };
 
-#endif // binaryTree_H_INCLUDED
+#endif // BINARY_TREE_H_INCLUDED
