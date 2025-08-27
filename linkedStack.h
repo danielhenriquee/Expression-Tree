@@ -46,6 +46,14 @@ T LinkedS_pop(LinkedS_TList<T> &list) {
     return data; // Return data from top element
 }
 
+// Returns top element of the stack without removing it
+template <typename T>
+T LinkedS_top(const LinkedS_TList<T> &list) {
+    if (list.top == nullptr)
+        throw std::underflow_error("Error: empty stack.");
+    return list.top->data;
+}
+
 // Check if stack is empty
 template <typename T>
 bool LinkedS_isEmpty(const LinkedS_TList<T> &list) {
