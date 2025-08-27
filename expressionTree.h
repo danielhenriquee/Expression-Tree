@@ -1,5 +1,5 @@
-#ifndef expressionTree_H_INCLUDED
-#define expressionTree_H_INCLUDED
+#ifndef EXPRESSION_TREE_H_INCLUDED
+#define EXPRESSION_TREE_H_INCLUDED
 
 #include "binaryTree.h"
 #include "linkedStack.h"
@@ -196,4 +196,4 @@ void printTree(Tree<T> tree) {
     delete[] M;
 }
 
-#endif // expressionTree_H_INCLUDED
+#endif // EXPRESSION_TREE_H_INCLUDED
