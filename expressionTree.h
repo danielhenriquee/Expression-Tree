@@ -21,7 +21,7 @@ int opPriority(char op) {
 
 // Connects an operator with two operands in a subtree and then push it back to stack
 template <typename T>
-void opSubtree(char op, Stack<TreeNode<T>*> &operands) { 
+void opSubtree(char op, LinkedS_TList<TreeNode<T>*> &operands) { 
     TreeNode<T> *right = LinkedS_pop(operands); // Pop the right operand off the stack
     TreeNode<T> *left = LinkedS_pop(operands); // Pop the left operand off the stack
     TreeNode<T> *node = new TreeNode<T>; // Create a new node for the operator
@@ -37,7 +37,7 @@ void opSubtree(char op, Stack<TreeNode<T>*> &operands) {
 // Build expression tree
 template <typename T>
 TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
-    Stack<TreeNode<T>*> operands, operators; // Stack of generic binary trees
+    LinkedS_TList<TreeNode<T>*> operands, operators; // Stack of generic binary trees
     LinkedS_boot(operands); // Stack for operands
     LinkedS_boot(operators); // Stack for operators
 
@@ -62,7 +62,7 @@ TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
             i++;
 
         } else if (expression[i] == ')') { // If the character is ')', process the operators stack until '('
-            while (!LinkedS_isEmpty(operators) && top(operators)->data != "(")
+            while (!LinkedS_isEmpty(operators) && LinkedS_LinkedS_LinkedS_top(operators)->data != "(")
                 opSubtree(LinkedS_pop(operators)->data[0], operands);
 
             pop(operators); // Pop the '('
@@ -70,7 +70,7 @@ TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
 
         } else { // The character is an operator
             char op = expression[i];
-            while (!LinkedS_isEmpty(operators) && opPriority(top(operators)->data[0]) >= opPriority(op)) // While there are operators on the stack with higher or equal priority
+            while (!LinkedS_isEmpty(operators) && opPriority(LinkedS_LinkedS_LinkedS_top(operators)->data[0]) >= opPriority(op)) // While there are operators on the stack with higher or equal priority
                 opSubtree(LinkedS_pop(operators)->data[0], operands); // Create operation sub-tree
 
             TreeNode<T> *newNode = new TreeNode<T>; 
