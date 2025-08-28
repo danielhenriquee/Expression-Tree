@@ -62,15 +62,15 @@ TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
             i++;
 
         } else if (expression[i] == ')') { // If the character is ')', process the operators stack until '('
-            while (!LinkedS_isEmpty(operators) && LinkedS_LinkedS_LinkedS_top(operators)->data != "(")
+            while (!LinkedS_isEmpty(operators) && LinkedS_top(operators)->data != "(")
                 opSubtree(LinkedS_pop(operators)->data[0], operands);
 
-            pop(operators); // Pop the '('
+            LinkedS_pop(operators); // Pop the '('
             i++;
 
         } else { // The character is an operator
             char op = expression[i];
-            while (!LinkedS_isEmpty(operators) && opPriority(LinkedS_LinkedS_LinkedS_top(operators)->data[0]) >= opPriority(op)) // While there are operators on the stack with higher or equal priority
+            while (!LinkedS_isEmpty(operators) && opPriority(LinkedS_top(operators)->data[0]) >= opPriority(op)) // While there are operators on the stack with higher or equal priority
                 opSubtree(LinkedS_pop(operators)->data[0], operands); // Create operation sub-tree
 
             TreeNode<T> *newNode = new TreeNode<T>; 
