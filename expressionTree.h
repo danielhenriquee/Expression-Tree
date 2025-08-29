@@ -125,6 +125,20 @@ void processExpression(string &expression) {
             expression.insert(i+1, "0");
             i++;  // Skip the inserted '0'
         }
+
+        // Solve '++' '+-' '-+' '--'
+        if ((expression[i] == '+' || expression[i] == '-') && (expression[i+1] == '+' || expression[i+1] == '-')) {
+            if (expression[i] == '+' && expression[i+1] == '+')
+                expression.replace(i, 2, "+");
+            else if (expression[i] == '+' && expression[i+1] == '-')
+                expression.replace(i, 2, "-");
+            else if (expression[i] == '-' && expression[i+1] == '+')
+                expression.replace(i, 2, "-");
+            else if (expression[i] == '-' && expression[i+1] == '-')
+                expression.replace(i, 2, "+");
+
+            i--; 
+        }
     }
 }
 
