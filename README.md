@@ -25,15 +25,15 @@ The project’s main purpose is to serve as educational material for combining m
 
 **Usage**
 1. Compile the program with a C++ compiler:
-  - g++ main.cpp -o expression-tree
+    - g++ main.cpp -o expression-tree
 2. Run the program:
-  - ./expression-tree
+    - ./expression-tree
 3. Use the interactive menu to:
-  - Enter an expression
-  - View the entered expression
-  - Build and print the expression tree
-  - Solve the expression and display its result
-  - Reset the tree or exit
+    - Enter an expression
+    - View the entered expression
+    - Build and print the expression tree
+    - Solve the expression and display its result
+    - Reset the tree or exit
 
 **Notes**
 - The tree is internally implemented as a generic binary tree (Tree<T>), but expression handling assumes T = string.
