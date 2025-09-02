@@ -37,6 +37,11 @@ void opSubtree(char op, LinkedS_TList<TreeNode<T>*> &operands) {
 // Build expression tree
 template <typename T>
 TreeNode<T> buildExpressionTree(Tree<T> &tree, string expression) {
+    if (expression.empty()) { // If empty
+        cout << "Invalid expressiion! No input was provided.\n";
+        return TreeNode<T>(); // Returns empty node
+    }
+
     LinkedS_TList<TreeNode<T>*> operands, operators; // Stack of generic binary trees
     LinkedS_boot(operands); // Stack for operands
     LinkedS_boot(operators); // Stack for operators

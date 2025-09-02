@@ -4,75 +4,93 @@
 #include <iostream>
 using namespace std;
 
+void clear() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+void pause() {
+    cout << "\nPress ENTER to continue...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
+}
+
 int main() {
     bool menu = true;
-    int resp;
+    int option;
     string expression = "";
     Tree<string> tree; 
     bootTree(tree);
     
     while (menu) {
+        clear();
         cout << endl << endl;
-        cout << "+===========Árvore de Expressão===========+" << endl;
-        cout << "| |=| 1  -  Inserir expressão             |" << endl;
-        cout << "| |=| 2  -  Mostrar expressão             |" << endl;
-        cout << "| |=| 3  -  Construir árvore de expressão |" << endl;
-        cout << "| |=| 4  -  Resolver árvore de expressão  |" << endl;
-        cout << "| --------------------------------------- |" << endl;
-        cout << "| |=| 5  -  Reiniciar                     |" << endl;
-        cout << "| |=| 6  -  Sair                          |" << endl;
-        cout << "+==================MENU===================+" << endl;
-        cin >> resp;
+        cout << "+========== Expression Tree ==========+" << endl;
+        cout << "| |=| 1  -  Enter expression          |" << endl;
+        cout << "| |=| 2  -  Show expression entered   |" << endl;
+        cout << "| |=| 3  -  Build expression tree     |" << endl;
+        cout << "| |=| 4  -  Solve expression tree     |" << endl;
+        cout << "| ----------------------------------- |" << endl;
+        cout << "| |=| 5  -  Reset expression tree     |" << endl;
+        cout << "| |=| 6  -  Exit                      |" << endl;
+        cout << "+================ MENU ===============+" << endl;
+        cin >> option;
         
-        switch (resp) {
+        switch (option) {
         case 1:
-            // system("CLS");
-            cout << "\033c";
-            cout << "O programa suporta o uso de números decimais, as operações + - * / e o uso de parênteses.\n";
-            cout << "Insira a expressão:" << endl;
+            clear();
+            cout << "The program supports the use of decimal numbers, the operations + - * / and the proper use of parentheses.\n";
+            cout << "Enter the expression:" << endl;
             cin >> expression;
             processExpression (expression);
+            pause();
             break;
         case 2:
-            // system("CLS");
-            cout << "\033c";
+            clear();
             if (expression.empty())
-                cout << "Não há expressão inserida.\n";
+                cout << "There is no expression entered.\n";
             else
-                cout << "Expressão inserida:\n" << expression;
+                cout << "Entered expression:\n" << expression;
+            pause();
             break;
         case 3:
-            // system("CLS");
-            cout << "\033c";
-            buildExpressionTree(tree, expression);
-            printTree(tree);
+            clear();
+            try {
+                buildExpressionTree(tree, expression);
+                printTree(tree);
+            } catch (const underflow_error &e) {
+                cout << "Error: incorrectly formed expression.\n";
+            }
+            pause();
             break;
         case 4:
-            // system("CLS");
-            cout << "\033c";
+            clear();
             if (tree.root != NULL)
-                cout << "O resultado da expressão inserida é: " << solveExpressionTree(tree.root) << endl;
+                cout << "The result of the entered expression is: " << solveExpressionTree(tree.root) << endl;
             else
-                cout << "A árvore de expressão está vazia.\n";
+                cout << "The expression tree is empty.\n";
+            pause();
             break;
         case 5:
-            // system("CLS");
-            cout << "\033c";
+            clear();
             bootTree(tree);
+            cout << "Expression tree reset.\n";
+            pause();
             break;
         case 6:
-            cout << "\033c";
+            clear()
             menu = 0;
+            destroyTree(tree.root);
             break;
         default:
-            // system("CLS");
-            cout << "\033c";
-            cout << "Opção inválida";
-            // system("pause");
+            clear()
+            cout << "Invalid option";
+            pause();
             break;
         }
     }
-    // system("CLS");
-    cout << "\033c";
-  return 0;
+    return 0;
 }

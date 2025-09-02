@@ -21,4 +21,13 @@ void bootTree(Tree<T> &tree) {
     tree.root = nullptr;
 };
 
+// Destroy tree
+template <typename T>
+void destroyTree(TreeNode<T>* node) {
+    if (node != nullptr) {
+        destroyTree(node->left);
+        destroyTree(node->right);
+        delete node;
+    }
+}
 #endif // BINARY_TREE_H_INCLUDED
