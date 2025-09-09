@@ -44,7 +44,8 @@ int main() {
             clear();
             cout << "The program supports the use of decimal numbers, the operations + - * / and the proper use of parentheses.\n";
             cout << "Enter the expression:" << endl;
-            cin >> expression;
+            cin.ignore();
+            getline(cin, expression);
             processExpression (expression);
             pause();
             break;
@@ -81,12 +82,12 @@ int main() {
             pause();
             break;
         case 6:
-            clear()
+            clear();
             menu = 0;
             destroyTree(tree.root);
             break;
         default:
-            clear()
+            clear();
             cout << "Invalid option";
             pause();
             break;
